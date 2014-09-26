@@ -8,6 +8,7 @@
 ##pv统计使用
 
 ###接口及参数说明：
+
 ```
 //引入log模块指定为log
 log.pvsend( pid, aid, writeType );
@@ -22,6 +23,7 @@ writeType: -- 额外参数(可选)，比如要统计指定id详情页的pv，wri
 
 
 ###使用示例：
+
 ```javascript
 //如统计旅游项目的首页pv
 log.pvsend( 90, 'travel_home' );
@@ -35,12 +37,12 @@ log.pvsend( 90, 'travel_detail', 'tid@198' );
 说明：关于`i_f`、`g_f`、`iarea`外部渠道号统计参数只计一次，内部已做了处理，使用时无需关注。
 
 
-
 ##点击行为统计使用
 
 点击行为统计主要用于页面中局部位置的点击行为统计，如某个按钮的点击量，轮播图中各张图片的点击量等。
 
 ###接口及参数说明：
+
 ```
 //引入log模块指定为log
 log.cksend( logType, params );
@@ -72,6 +74,7 @@ $( '.banner li' ).each( function( el, idx ) {
 ###使用方法2：
 
 直接在dom元素上添加class为`log-send`, 并指定`data-send`统计参数，参数间用`|`分隔，这种方式更快捷，不需要额外绑定事件添加发送方法。如：
+
 ```html
 <!--如统计旅游首页某个按钮的点击量-->
 <a class="log-send" data-send="submit-btn">提交</a>
