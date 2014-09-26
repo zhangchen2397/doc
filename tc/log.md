@@ -9,19 +9,37 @@
 
 ```
 //接口地址：
-pv统计:   http://infoapp.3g.qq.com/g/common/log/pvlog.jsp
-临时统计：http://infoapp.3g.qq.com/g/common/log/templog.jsp
+pv统计:    http://infoapp.3g.qq.com/g/common/log/pvlog.jsp
+临时统计： http://infoapp.3g.qq.com/g/common/log/templog.jsp
 ```
 
 ###pv统计
 
 **参数说明：**
 ```
-pid:        业务id，数值类型，比如电影项目`pid=87`，具体值后端给
-aid:        页面标识，字符串类型，如旅游详情页`aid=travel_detail`，和后端约定
-writeType:  额外参数，比如要统计指定id详情页的pv，`writeType="mid@190"`
+pid:        业务id，数值类型，比如电影项目pid=87，具体值后端给
+aid:        页面标识，字符串类型，如旅游详情页aid=travel_detail，和后端约定
+writeType:  额外参数(可选)，比如要统计指定id详情页的pv，writeType="mid@190"
             历史问题为什么是writeType字段名和这种格式
 ```
+
+通过这3个参数我们就可以确定页面的唯一性统计各个页面的pv了。
+
+**使用：**
+```javascript
+//引入log模块指定为log
+log.pvsend( pid, aid, writeType );
+
+//使用示例，大部分情况下只需要pid和aid就可以了。
+
+//如统计旅游项目的首页pv
+log.pvsend( 90, 'travel_home' );
+
+//如统计旅游项目的详情页pv
+log.pvsend( 90, 'travel_detail', 'tid@198' );
+```
+
+
 
 
 
