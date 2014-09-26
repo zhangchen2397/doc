@@ -70,10 +70,10 @@ $( '.banner li' ).each( function( el, idx ) {
 
 直接在dom元素上添加class为`log-send`, 并指定data-send统计参数，参数间用`|`分隔，这种方式更快捷，不需要额外绑定事件添加发送方法。如：
 ```html
-//如统计旅游首页某个按钮的点击量
+<!--如统计旅游首页某个按钮的点击量-->
 <a class="log-send" data-send="submit-btn">提交</a>
 
-//如统计旅游首页轮播图各张图的点击量
+<!--如统计旅游首页轮播图各张图的点击量-->
 <li class="log-send" data-send="banner|index1"></li>
 ```
 
