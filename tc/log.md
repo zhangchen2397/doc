@@ -23,14 +23,12 @@ writeType:  额外参数(可选)，比如要统计指定id详情页的pv，write
             历史问题为什么是writeType字段名和这种格式
 ```
 
-通过这3个参数我们就可以确定页面的唯一性统计各个页面的pv了。
+通过这3个参数就可以确定页面的唯一性统计各个页面的pv了，大部分情况下只需要pid和aid就可以了。
 
 **使用：**
 ```javascript
 //引入log模块指定为log
 log.pvsend( pid, aid, writeType );
-
-//使用示例，大部分情况下只需要pid和aid就可以了。
 
 //如统计旅游项目的首页pv
 log.pvsend( 90, 'travel_home' );
