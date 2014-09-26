@@ -9,8 +9,18 @@
 
 ```
 //接口地址：
-pv统计: http://infoapp.3g.qq.com/g/common/log/pvlog.jsp,
+pv统计:   http://infoapp.3g.qq.com/g/common/log/pvlog.jsp
 临时统计：http://infoapp.3g.qq.com/g/common/log/templog.jsp
+```
+
+###pv统计
+
+**参数说明：**
+```
+pid:        业务id，数值类型，比如电影项目`pid=87`，具体值后端给
+aid:        页面标识，字符串类型，如旅游详情页`aid=travel_detail`，和后端约定
+writeType:  额外参数，比如要统计指定id详情页的pv，`writeType="mid@190"`
+            历史问题为什么是writeType字段名和这种格式
 ```
 
 
