@@ -1,4 +1,4 @@
-前端日志发送规范 ()
+前端日志发送规范 [SVN](http://tc-svn.tencent.com/mqq/mqq_3gqq_rep/info_proj/trunk/commons/mt/module/w_mod/JT/mods/log.js)
 =========
 
 后端接口人：leoxhwang(王旭含)，前端接口人：samczhang(张臣)
