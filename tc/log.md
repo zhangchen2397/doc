@@ -6,18 +6,16 @@
 ##pv统计使用
 
 **接口及参数说明：**
-```javascript
-/**
- * pid: ------------ 业务id(必须)，数值类型，比如电影项目pid=87，具体值后端给出
- *
- * aid: ------------ 页面标识(必须)，字符串类型，如旅游详情页aid=travel_detail，和后端约定
- *
- * writeType: ------ 额外参数(可选)，比如要统计指定id详情页的pv，writeType="mid@190"，和后端约定
- *                   历史问题为什么是writeType字段名和这种格式
- */
-
- //引入log模块指定为log
+```
+//引入log模块指定为log
 log.pvsend( pid, aid, writeType );
+
+pid: ------------ 业务id(必须)，数值类型，比如电影项目pid=87，具体值后端给出
+
+aid: ------------ 页面标识(必须)，字符串类型，如旅游详情页aid=travel_detail，和后端约定
+
+writeType: ------ 额外参数(可选)，比如要统计指定id详情页的pv，writeType="mid@190"，和后端约定
+                  历史问题为什么是writeType字段名和这种格式
 ```
 
 **使用示例：**
