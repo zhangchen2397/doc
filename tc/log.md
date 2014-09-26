@@ -27,13 +27,42 @@ log.pvsend( 90, 'travel_home' );
 log.pvsend( 90, 'travel_detail', 'tid@198' );
 ```
 
-
 通过这3个参数就可以确定页面的唯一性统计各个页面的pv了，大部分情况下只需要pid和aid就可以了。
+
+**说明**关于`i_f`、`g_f`、`iarea`外部渠道号统计参数只计一次，内部已做了处理，使用时无需关注。
+
+
 
 ##点击行为统计使用
 
+点击行为统计主要用于页面中局部位置的点击行为统计，如某个按钮的点击量，轮播图中各张图片的点击量等。
 
+**接口及参数说明：**
+```
+//引入log模块指定为log
+log.cksend( logType, otherPara );
 
+logType: ------------ 统计标识(必须)，字符串类型，比如logType=home_banner，具体值和后端约定
+
+otherPara: ---------- 额外统计参数(可选)，字符串类型，多个参数以`,`分隔
+                      如需统计轮播图中各张图片的点击量, otherPara=index1,index2
+```
+
+**使用方法1：**
+在需要统计的dom元素上绑定`click`或`touchend`事件，调用`log.cksend()`方法即可，大多数情况下只需要logType参数即可，如：
+
+```javascript
+//如统计旅游首页某个按钮的点击量
+$( '.submit-btn' ).on( 'click', function() {
+    log.cksend( 'submit_btn' );
+} );
+
+//如统计旅游首页轮播图各张图的点击量
+$( '.banner li' ).each( function( el, idx ) {
+    $( this ).on( 'click', function() {
+        log.cksend( 'banner', idx );
+    } );
+} );
 
 
 
