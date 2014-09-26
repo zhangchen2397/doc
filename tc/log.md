@@ -10,12 +10,12 @@
 //引入log模块指定为log
 log.pvsend( pid, aid, writeType );
 
-pid: ------------ 业务id(必须)，数值类型，比如电影项目pid=87，具体值后端给出
+pid: ---------- 业务id(必须)，数值类型，比如电影项目pid=87，具体值后端给出
 
-aid: ------------ 页面标识(必须)，字符串类型，如旅游详情页aid=travel_detail，和后端约定
+aid: ---------- 页面标识(必须)，字符串类型，如旅游详情页aid=travel_detail，和后端约定
 
-writeType: ------ 额外参数(可选)，比如要统计指定id详情页的pv，writeType="mid@190"，和后端约定
-                  历史问题为什么是writeType字段名和这种格式
+writeType: ---- 额外参数(可选)，比如要统计指定id详情页的pv，writeType="mid@190"，和后端约定
+                历史问题为什么是writeType字段名和这种格式
 ```
 
 **使用示例：**
@@ -40,15 +40,16 @@ log.pvsend( 90, 'travel_detail', 'tid@198' );
 **接口及参数说明：**
 ```
 //引入log模块指定为log
-log.cksend( logType, otherPara );
+log.cksend( logType, params );
 
-logType: ------------ 统计标识(必须)，字符串类型，比如logType=home_banner，具体值和后端约定
+logType: ------- 统计标识(必须)，字符串类型，比如logType=home_banner，具体值和后端约定
 
-otherPara: ---------- 额外统计参数(可选)，字符串类型，多个参数以`,`分隔
-                      如需统计轮播图中各张图片的点击量, otherPara=index1,index2
+params: -------- 额外统计参数(可选)，字符串类型，多个参数以`,`分隔
+                 如需统计轮播图中各张图片的点击量, params=index1,index2
 ```
 
 **使用方法1：**
+
 在需要统计的dom元素上绑定`click`或`touchend`事件，调用`log.cksend()`方法即可，大多数情况下只需要logType参数即可，如：
 
 ```javascript
@@ -63,9 +64,17 @@ $( '.banner li' ).each( function( el, idx ) {
         log.cksend( 'banner', idx );
     } );
 } );
+```
 
+**使用方法2：**
 
+直接在dom元素上添加class为`log-send`, 并指定data-send统计参数，参数间用`|`分隔，这种方式更快捷，不需要额外绑定事件添加发送方法。如：
+```html
+//如统计旅游首页某个按钮的点击量
+<a class="log-send" data-send="submit-btn">提交</a>
 
-
+//如统计旅游首页轮播图各张图的点击量
+<li class="log-send" data-send="banner|index1"></li>
+```
 
 
