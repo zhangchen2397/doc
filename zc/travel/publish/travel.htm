@@ -1,0 +1,558 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>旅游项目前端开发小结 - By samczhang</title>
+    <link rel="stylesheet" media="all" href="./css/nodeppt2.0.css">
+    <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="./css/phone.css">
+    <link rel="stylesheet" media="print" href="./css/pdf.css">
+    <link rel="stylesheet" href="./js/highlight/styles/monokai_sublime.css">
+</head>
+<body>
+<div class="slides">
+    <slides id="container">
+        <slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>旅游WEBAPP项目前端开发小结</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>主要内容</h1>
+
+</hgroup><article>
+
+<ul>
+<li>工作方式的转变</li>
+<li>开始一个全新的项目</li>
+<li>开发过程中的具体问题</li>
+<li>项目后的一些思考及想法</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>工作方式的转变</h1>
+
+</hgroup><article>
+
+<ul>
+<li>环境及团队的变化</li>
+<li>开发流程的差异<ul>
+<li>开发、联调、提测、上线</li>
+<li>前端及重构单独分工</li>
+</ul>
+</li>
+<li>由PC到移动前端开发<ul>
+<li>浏览器的兼容到适配</li>
+<li>后端由php到java</li>
+</ul>
+</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>开始一个全新的项目</h1>
+
+</hgroup><article>
+
+<ul>
+<li>从学习一个项目开始</li>
+<li>开始编写项目代码<ul>
+<li>项目目录结构</li>
+<li>基本规范</li>
+<li>代码入口及执行流程</li>
+<li>本地接口模拟测试</li>
+</ul>
+</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>项目目录结构</h2>
+
+</hgroup><article>
+
+<pre><code class="html">travel
+    ├── js .......................... js目录
+    |   ├── mod ..................... 公共模块目录
+    |   |    ├── jqmobi.js
+    |   |    ├── core.js
+    |   |    ├── dialog.js
+    |   |    └── more
+    |   └── pages ................... 页面级js入口目录
+    |        ├── index.js
+    |        ├── list.js
+    |        ├── detail.js
+    |        └── more
+    ├── API ......................... 模拟数据接口目录
+    |    ├── index.json
+    |    ├── list.json
+    |    ├── detail.json
+    |    └── more
+    ├── build.conf .................. build配置文件
+    ├── index.jsp ................... 项目首页模板
+    └── init.js ..................... 项目入口文件
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>基本规范</h2>
+
+</hgroup><article>
+
+<h3>编码细节规范</h3>
+<ul>
+<li>所有文件名及目录名采用驼峰，如groupInfo.js；</li>
+<li>js中所有变量名及方法采用驼峰命名，如initEvent()；</li>
+<li>html中自定义属性采用中划线连接，如data-cid=&quot;698&quot;；</li>
+<li>变更声明、常量、分号... <a href="https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml" target="_blank">参考Google JavaScript 规范</a></li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>基本规范</h2>
+
+</hgroup><article>
+
+<p>js中获取模板数据统一处理</p>
+<pre><code class="javascript">define( &#39;JSP&#39;, [], function() {
+    return {
+        userInfo: {
+            sid      : &quot;&lt;%=s_head.sid%&gt;&quot;,
+            isLogin  : &quot;&lt;%=s_user.isLogin3G()%&gt;&quot;, 
+            qq       : &quot;&lt;%=s_user.getUinL()%&gt;&quot;,
+            nick     : &quot;&lt;%=s_user.getNickName()%&gt;&quot;
+        },
+
+        version: &quot;&lt;%=jspVer%&gt;&quot;
+    };
+} );
+</code></pre>
+<pre><code class="javascript">define( &#39;index&#39;, [ &#39;JSP&#39; ], function( JSP ) {
+    var userInfo = JSP.userInfo;
+    //to do list
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>基本规范</h2>
+
+</hgroup><article>
+
+<p>页面入口文件统一规范</p>
+<pre><code class="javascript">define( &#39;index&#39;, [ &#39;jqmobi&#39;, &#39;pm&#39;, &#39;mTpl&#39; ], function( $, PM, mTpl ) {
+    var tpl = [
+        &#39;&lt;% for ( var i = 0; i &lt; slideLen; i++ ) { %&gt;&#39;,
+            &#39;&lt;span&gt;&lt;%= i + 1 %&gt;&lt;/span&gt;&#39;,
+        &#39;&lt;% } %&gt;&#39;,
+    ].join( &#39;&#39; );
+
+    var pageRun = {
+        init: function() {
+            this._registerPm();
+            this._renderTpl();
+            this._initEvent();
+            //其它初始化
+        },
+
+        //注册PM
+        _registerPm: function() {},
+
+        //渲染模板
+        _renderTpl: function() { },
+
+        //初始化事件绑定
+        _initEvent: function() { }
+    };
+
+    pageRun.init();
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>基本规范</h2>
+
+</hgroup><article>
+
+<p>组件书写统一规范</p>
+<pre><code class="javascript">define( &#39;dialog&#39;, [ &#39;jqmobi&#39; ], function( $ ) {
+    var dialog = function( config ) {
+        this.defaultConfig = {
+            dialogId: &#39;dialog&#39;,
+            //other default config
+        };
+
+        this.config = $.extend( this.defaultConfig, config || {} );
+        this.init.call( this );
+    };
+
+    $.extend( dialog.prototype, {
+        init: function() {
+            this._cacheDom();
+            this._initEvent();
+            //other method
+        },
+
+        //组件内私有方法
+        _cacheDom: function() {},
+        _initEvent: function() {},
+
+        //对外公共方法
+        show: function() {}
+    } );
+
+    return dialog;
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>本地接口模拟测试</h2>
+
+</hgroup><article>
+
+<p>在JSP中配置测试及正式环境接口map</p>
+<pre><code class="javascript">define( &#39;JSP&#39;, [], function() {
+    var rootDirName = location.href.indexOf( &quot;.kf0309.&quot; ) &gt; -1 ? &#39;infoapp&#39; : &#39;g&#39;, 
+        prePath = &#39;http://&#39; + location.host + &#39;/&#39; + rootDirName,
+        pathMap = {};
+
+    if ( isTestEnv &amp;&amp; isTestAPI ) {
+        prePath = prePath + &#39;/travel/touch/API/&#39;;
+        pathMap = {
+            home: prePath + &#39;home.json&#39;,
+            list: prePath + &#39;list.json&#39;,
+            //...
+        };
+    } else {
+        prePath = prePath + &#39;/s?aid=action_api&amp;module=travel&amp;&#39;;
+        pathMap = {
+            home: prePath + &#39;action=raiders,line_recommended&#39;,
+            list: prePath + &#39;action=&amp;action=line_list&#39;,
+            //...
+        };
+    }
+
+    return {
+        pathInfo: mathMap,
+        userInfo: userInfo
+    }
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>开发过程中的具体问题</h1>
+
+</hgroup><article>
+
+<ul>
+<li>各种坑...<ul>
+<li>隐藏地址栏</li>
+<li>iscroll性能问题</li>
+<li>事件穿透与click延迟</li>
+<li>ios fixed bug</li>
+</ul>
+</li>
+<li>缓存与数据同步</li>
+<li>多页面切换返回定位</li>
+<li>全局事件绑定与销毁</li>
+<li>新的尝试</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>各种坑...</h2>
+
+</hgroup><article>
+
+<ul>
+<li><p>隐藏地址栏</p>
+<pre><code class="javascript">function hideAddrBar() {
+  var bodyStyle = document.body.style;
+
+  bodyStyle[ &#39;min-height&#39; ] = &#39;2000px&#39;;
+  window.scrollTo( 0, 1 );
+  setTimeout( function() {
+      bodyStyle[ &#39;min-height&#39; ] = window.innerHeight + &#39;px&#39;;
+  }, 400 );
+}
+</code></pre>
+</li>
+<li><p>iscroll性能问题<br/>
+  能不能尽量不用，在低端android机器下性能很差</p>
+</li>
+<li><p>事件穿透与click延迟<br/>
+  直接引用fastclick.js</p>
+</li>
+<li><p>ios fixed bug<br/>
+  当页面中元素定位使用了fixed后，input标签获取焦点时，会出现fixed元素位置偏移。暂无更好的解决办法</p>
+</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>缓存与数据同步</h2>
+
+</hgroup><article>
+
+<blockquote>
+<p><strong>缓存：</strong>这里的缓存不是持久缓存，是指页面的DOM缓存或保存在内存中的js对象</p>
+</blockquote>
+<p>DOM整个页面HTML缓存，适用于内容固定的页面</p>
+<pre><code class="javascript">//只在页面添加时执行一次
+$.bind( module, &#39;vpageAdd&#39;, function() {
+    me.curPage = $( &#39;.virtualPage[page=&#39; + module.id + &#39;]&#39; );
+
+    //请求数据并渲染模板
+    me._ajaxData();
+} );
+
+//当再次进入页面或返回时直接显示即可
+$.bind( module, &#39;vpageEnter&#39;, function() {
+    me.curPage.show();
+
+    //需要单独打统计日志
+    Log.send();
+} );
+
+$.bind( module, &#39;vpageBack&#39;, function() {
+    me.curPage.show();
+    Log.send();
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>缓存与数据同步</h2>
+
+</hgroup><article>
+
+<blockquote>
+<p><strong>缓存：</strong>这里的缓存不是持久缓存，是指页面的DOM缓存或保存在内存中的js对象</p>
+</blockquote>
+<p>缓存数据对象，适用于同一模板对应不同数据的页面</p>
+<pre><code class="javascript">$.bind( module, &#39;vpageEnter&#39;, function() {
+    var detailDataMap = Data.get( &#39;detailDataMap&#39; ) || {},
+        id = this.getHashParaValue( &#39;id&#39; ) || 253;
+
+    //首先从数据对象中取，如有则直接重新渲染模板即可
+    if ( detailDataMap[ id ] ) {
+        me.renderTpl( detailDataMap[ id ] );
+    } else {
+        $.ajax( {
+            url: pathInfo.detail,
+            success: function( data ) {
+                var data = JSON.parse( data ),
+                    dataPush = {};
+
+                //将新数据添加到数据数据对象中
+                dataPush[ id ] = data;
+                $.extend( detailDataMap, dataPush );
+                Data.set( &#39;detailDataMap&#39;, detailDataMap );
+            }
+        } );
+    }
+
+    Log.send();
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>缓存与数据同步</h2>
+
+</hgroup><article>
+
+<blockquote>
+<p><strong>数据同步：</strong>页面切换时，局部数据更新后回退时数据要同步一致</p>
+</blockquote>
+<p>同一数据多入口显示，返回时要保持一致，利用通信事件监听</p>
+<pre><code class="javascript">//在详情页
+this.el.delegate( &#39;.agreen-btn&#39;, &#39;touchend&#39;, function( event ) {
+    var pid = $( this ).data( &#39;pid&#39; );
+
+    $.ajax( {
+        url: pathInfo.agreen,
+        success: function( data ) {
+            var data = JSON.parse( data );
+
+            $.trigger( window, &#39;agreeSuccess&#39;, [
+                pid: pid,
+                num: data.num
+            ] );
+        }
+    } );
+} );
+
+//在项目入口文件中
+$.bind( window, &#39;agreeSuccess&#39;, function( event ) {
+    var data = event.data;
+
+    //更新所有页面中指定产品的点赞数
+    me.updateAgreenNum( data );
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>多页面切换返回定位原位置</h2>
+
+</hgroup><article>
+
+<pre><code class="javascript">//当渲染完模板都会派发afterRender事件
+function renderPage( data ) {
+    mTpl.render( tpl, data );
+
+    $.trigger( this, &#39;afterRender&#39; );
+}
+
+$.bind( this, &#39;afterRender&#39;, function( event ) {
+    if ( me.module.pos ) {
+        window.scrollTo( 0, me.module.pos.y );
+    }
+} );
+
+//但有时又需要针对指定的页面返回时才定位
+$.bind( this, &#39;afterRender&#39;, function( event ) {
+    if ( event.prevPage == &#39;detail&#39; ) {
+        if ( me.module.pos ) {
+            window.scrollTo( 0, me.module.pos.y );
+        }
+    } else {
+        window.scrollTo( 0, 1 );
+    }
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>全局事件绑定与解绑</h2>
+
+</hgroup><article>
+
+<p>将全局事件转移到当前模块</p>
+<pre><code class="javascript">$( window ).bind( &#39;scroll&#39;, function() {
+    PM.notify( &#39;scroll&#39; );
+} );
+
+//这样只会影响当前模块
+$.bind( curMod, &#39;scroll&#39;, function() {
+    //to do list
+} );
+</code></pre>
+<p>页面进入时添加事件监听，离开时解绑</p>
+<pre><code class="javascript">$.bind( module, &#39;vpageEnter&#39;, function( event ) {
+    $( window ).bind( &#39;scroll&#39;, this.scrollHander );
+    //to do list
+} );
+
+$.bind( module, &#39;vpageLeave&#39;, function() {
+    $( window ).unbind( &#39;scroll&#39;, this.scrollHander );
+    //to do list
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h2>一些新的尝试</h2>
+
+</hgroup><article>
+
+<p>增加场间过渡，接近原生app体验</p>
+<pre><code class="javascript">$.bind( window, &#39;vpageEnter&#39;, function( event ) {
+    var curPage = $( &#39;.virtualPage[page=&#39; + event.curPage + &#39;]&#39; ),
+        prePage = $( &#39;.virtualPage[page=&#39; + event.prevPage + &#39;]&#39; ),
+        curPageEl = curPage[ 0 ];
+
+    curPage.show();
+
+    if ( prePage.length ) {
+        curPage.addClass( &#39;sliderightin&#39; );
+        curPage.addClass( &#39;animatestart&#39; );
+
+        curPageEl.addEventListener( &#39;webkitAnimationEnd&#39;, animationCb, false );
+    }
+
+    function animationCb() {
+        prePage.hide();
+        curPage.removeClass( &#39;animatestart&#39; );
+        curPage.removeClass( &#39;sliderightin&#39; );
+        window.scrollTo( 0, 0 );
+        curPageEl.removeEventListener( &#39;webkitAnimationEnd&#39;, animationCb, false );
+    }
+} );
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><hgroup>
+<h1>项目后的一些思考及想法</h1>
+
+</hgroup><article>
+
+<ul>
+<li>代码性能与底层库</li>
+<li>理想的模块化开发<ul>
+<li>模块是可组合、可分解和更换的单元</li>
+<li>模块具有一定的独立性</li>
+<li>将模块所需的js、css、图片、模板维护在一起</li>
+</ul>
+</li>
+<li>业界已有的整体方案及开发模式</li>
+</ul>
+
+</article></section></slide>
+        <slide class="slide thank-you-slide segue nobackground">
+            <article class="flexbox vleft auto-fadein">
+                <h2>Q &amp; A</h2>
+                <h3>&lt;Thank You!&gt;</h3>
+            </article>
+        </slide>
+    </slides>
+</div>
+<canvas id="drawBoard" class="draw-board" width="900" height="700"></canvas>
+<div class="progress"><span id="progress"></span></div>
+<script src="./js/mixjs/lib/mix.0.3.0.min.js"></script>
+<script>
+var base = location.protocol + '//' + location.host;
+
+var path = location.pathname.split('/').filter(function(v){
+    return !!v;
+});
+path.pop();
+path = path.join('/');
+MixJS.config({
+    baseURL: [ base, path, 'js'].join('/')+'/'
+});
+
+
+MixJS.use('event/broadcast', function($){
+    $.loadJS('nodeppt.js',function(){
+        Slide.init({
+            containerID: 'container',
+            drawBoardID: 'drawBoard',
+            slideClass: '.slide',
+            buildClass: '.build',
+            progressID: 'progress',
+            transition: 'move',
+            width: 1100,
+            dir: './',
+            
+            //打开下面的注释就开启postMessage方式
+            //访问网址127.0.0.1:8080/ppt/demo#client
+            control:{
+                type: 'postMessage'
+            },
+            
+            tipID: 'tip'
+        });
+    }).loadJS('highlight/hljs-0.8.js',function(){
+        hljs.tabReplace = '  ';
+        hljs.initHighlightingOnLoad();
+    });
+});
+</script>
+<script src="./js/demo.js"></script>
+<link rel="stylesheet" href="./css/demo.css">
+</body>
+</html>

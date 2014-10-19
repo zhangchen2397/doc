@@ -1,0 +1,32 @@
+ul li ul {
+	margin: 0 0 .5em 2em;
+}
+
+h3 {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+p {
+    text-align: left;
+    padding: 15px 0;
+}
+
+slides>slide .slide-wrapper b, slides>slide .slide-wrapper strong {
+    text-shadow: none;
+}
+
+slides>slide .slide-wrapper blockquote {
+    text-align: left;
+    margin-bottom: 20px;
+    display: block;
+}
+
+
+.file-setting{
+    color: yellow;
+}
+#incallback,#outcallback{
+    margin-top:10px;
+    background-color: rgba(0,0,0,.5);
+}
