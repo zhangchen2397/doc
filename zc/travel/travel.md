@@ -154,7 +154,7 @@ define( 'dialog', [ 'jqmobi' ], function( $ ) {
             //other default config
         };
 
-        this.config = $.extend( this.defaultConfig, config || {} );
+        this.config = $.extend( {}, this.defaultConfig, config || {} );
         this.init.call( this );
     };
 
