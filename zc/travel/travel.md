@@ -184,7 +184,7 @@ define( 'dialog', [ 'jqmobi' ], function( $ ) {
 在JSP中配置测试及正式环境接口map
 ```javascript
 define( 'JSP', [], function() {
-    var rootDirName = location.href.indexOf( ".kf0309." ) > -1 ? 'infoapp' : 'g', 
+    var rootDirName = location.href.indexOf( ".testevn." ) > -1 ? 'infoapp' : 'g', 
         prePath = 'http://' + location.host + '/' + rootDirName,
         pathMap = {};
 

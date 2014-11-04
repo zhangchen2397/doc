@@ -213,7 +213,7 @@
 
 <p>在JSP中配置测试及正式环境接口map</p>
 <pre><code class="javascript">define( &#39;JSP&#39;, [], function() {
-    var rootDirName = location.href.indexOf( &quot;.kf0309.&quot; ) &gt; -1 ? &#39;infoapp&#39; : &#39;g&#39;, 
+    var rootDirName = location.href.indexOf( &quot;.testenv.&quot; ) &gt; -1 ? &#39;infoapp&#39; : &#39;g&#39;, 
         prePath = &#39;http://&#39; + location.host + &#39;/&#39; + rootDirName,
         pathMap = {};
 
