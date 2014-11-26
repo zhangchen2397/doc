@@ -1,23 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>shortcut demo</title>
+    <title>腾讯美游</title>
     <meta charset="utf-8">
     <meta name="author" content="zhangchen2397@126.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" href="http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/travel_logo.png">
     <link rel="stylesheet" href="http://sellfor.sinaapp.com/static/modules/page/common/base/reset.css">
     <script src="./jqmobi.js"></script>
-    <script src="./shortcut.js"></script>
+    <script src="./shortcutAndroid.js"></script>
+    <script src="./shortcutIos.js"></script>
 </head>
 
 <body style="min-height:900px;font:normal 14px/1.5 微软雅黑,Helvetica">
+    <button id="clear-storage" style="margin:20px">清除所有记录</button><br/>
+    <button id="clear-showdate" style="margin:0px 20px 20px">重置上次显示日期</button><br/>
+    <button id="clear-forceclosedate" style="margin:0 20px 20px">重置主动关闭日期</button>
+
+    <p style="margin:20px 0 5px 20px;">当前实际日期：<span id="cur-date"></span></p>
+    <p style="margin:0 0 5px 20px;">上次显示日期：<span id="lastshow-date"></span></p>
+    <p style="margin:0 0 5px 20px;">主动关闭日期：<span id="forceclose-date"></span></p>
+
     <script>
-        new shortcut( {
+        var shortcutAndroidIns = new shortcutAndroid( {
+            url: 'http://4g.qq.com',
+            tips: '添加快捷方式，一键访问手腾',
+            key: 'travel'
+        } );
+
+        var shortcutIns = new shortcutIos( {
             icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/img_travel.png',
             key: 'travel'
         } );
+    </script>
+
+    <script>
+        ( function() {
+            var curDate = new Date();
+            $('#clear-storage').on('click', function() {
+                localStorage.clear();
+                $( '#lastshow-date' ).html( 'xxxx-xx-xx' );
+                $( '#forceclose-date' ).html( 'xxxx-xx-xx' );
+            });
+
+            $('#clear-showdate').on('click', function() {
+                localStorage.setItem('dailyShow-travel', '2014-11-24');
+                $( '#lastshow-date' ).html( '2014-11-24' );
+            });
+
+            $('#clear-forceclosedate').on('click', function() {
+                localStorage.setItem('forceClose-travel', '2014-11-19');
+                $( '#forceclose-date' ).html( '2014-11-19' );
+            });
+
+            $( '#cur-date' ).html( shortcutAndroidIns.getFormatDate( curDate ) );
+            $( '#lastshow-date' ).html( localStorage.getItem('dailyShow-travel') || 'xxxx-xx-xx' );
+            $( '#forceclose-date' ).html( localStorage.getItem('forceClose-travel') || 'xxxx-xx-xx' );
+        } )();
     </script>
 </body>
 
