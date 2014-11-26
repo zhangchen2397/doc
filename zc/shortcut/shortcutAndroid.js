@@ -137,8 +137,12 @@
             }
 
             //如是已安装，则不显示
-            if (window.isInstall) {
-                return false;
+            if (x5mtt) {
+                var rst = x5mtt.packages().isApkInstalled(JSON.stringify({"packagename": "mqq"}));
+
+                if (x5mtt.packages().isApkInstalled(JSON.stringify({"packagename": "mqq"}))) {
+                    return false;
+                }
             }
 
             //如果已显示，且间隔时间小于一天，则不显示
