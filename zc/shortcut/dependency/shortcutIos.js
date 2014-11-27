@@ -5,8 +5,7 @@
  *
  * @example
  *  new shortcutIos({
- *      icon: 'http://3gimg.qq.com/wap30/travel.png', //icon url
- *      key: 'travel'                                 //业务名称
+ *      key: 'travel' //业务名称
  *  });
  *
  */
@@ -46,9 +45,19 @@
         '</div>'
     ].join('');
 
+    var appMap = {
+        home: {
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/img_travel.png',
+            tips: '添加快捷方式，一键访问手腾'
+        },
+        travel: {
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/img_travel.png',
+            tips: '添加快捷方式，一键访问手腾'
+        }
+    };
+
     var shortcut = function(config) {
         this.defaultConfig = {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/img_travel.png',
             key: 'travel'
         };
 
@@ -76,7 +85,7 @@
             var me = this,
                 config = this.config;
 
-            tplStr = tplStr.replace('{%imgurl%}', config.icon);
+            tplStr = tplStr.replace('{%imgurl%}', appMap[config.key].icon);
 
             $('head').append('<style>' + styleStr + '</style>');
             $( document.body ).append(tplStr);

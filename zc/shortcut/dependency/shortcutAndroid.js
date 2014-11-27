@@ -5,9 +5,7 @@
  *
  * @example
  *  new shortcutAndroid({
- *      url: 'http://4g.qq.com',             //apk下载地址
- *      tips: '添加快捷方式，一键访问手腾',  //提示方案
- *      key: 'home'                          //业务标识 
+ *      key: 'home' //业务标识 
  *  });
  *
  */
@@ -41,10 +39,21 @@
         '</div>'
     ].join('');
 
+    var appMap = {
+        home: {
+            url: 'http://yuelinzheng.kf0309.3g.qq.com/infoapp/appcenter/?fid=1',
+            name: 'com.tencent.lightapp.Tencent',
+            tips: '添加快捷方式，一键访问手腾'
+        },
+        travel: {
+            url: 'http://yuelinzheng.kf0309.3g.qq.com/infoapp/appcenter/?fid=4',
+            name: 'com.tencent.lightapp.meiyou',
+            tips: '添加快捷方式，一键访问美游'
+        }
+    };
+
     var shortcut = function(config) {
         this.defaultConfig = {
-            url: 'http://4g.qq.com',
-            tips: '添加快捷方式，一键访问手腾',
             key: 'home'
         };
 
@@ -70,10 +79,11 @@
 
         _createDom: function() {
             var me = this,
-                config = this.config;
+                config = this.config,
+                app = appMap[config.key];
 
-            tplStr = tplStr.replace('{%tips%}', config.tips)
-                           .replace('{%url%}', config.url);
+            tplStr = tplStr.replace('{%tips%}', app.tips)
+                           .replace('{%url%}', app.url);
 
             $('head').append('<style>' + styleStr + '</style>');
             $( document.body ).append(tplStr);
@@ -137,10 +147,14 @@
             }
 
             //如是已安装，则不显示
-            if (x5mtt) {
-                var rst = x5mtt.packages().isApkInstalled(JSON.stringify({"packagename": "mqq"}));
+            if (window.x5mtt) {
+                var rst = window.x5mtt.packages().isApkInstalled(JSON.stringify({
+                    "packagename": appMap[config.key].name
+                }));
 
-                if (x5mtt.packages().isApkInstalled(JSON.stringify({"packagename": "mqq"}))) {
+                alert(rst);
+
+                if (rst == 1) {
                     return false;
                 }
             }
