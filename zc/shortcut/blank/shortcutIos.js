@@ -10,9 +10,13 @@
  *
  */
 
-(function(root, factory) {
+;(function(root, factory) {
     if (typeof define === 'function') {
         define('shortcutIos', [], function() {
+            return factory(root);
+        });
+    } else if (window.core && typeof core.define === 'function') {
+        core.define('shortcutIos', [], function() {
             return factory(root);
         });
     } else {
@@ -25,9 +29,9 @@
         '#shortcut-i-pannel .con { position:relative; height:76px; }',
         '#shortcut-i-pannel .ic-bg {background:transparent url(http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/img/bg-ic.png) no-repeat scroll; -webkit-background-size: 20px auto;}',
         '#shortcut-i-pannel .ic-closebtn {position:absolute; right:10px; top:10px; z-index:3; width:11px; height:11px; background-position:left top;}',
-        '#shortcut-i-pannel .tips {padding:15px 10px;}',
-        '#shortcut-i-pannel .tips img {width:45px; height:45px; border-radius:3px; float:left; margin-right:10px;}',
-        '#shortcut-i-pannel .tips p {color:#FFFFFF; position:relative; top:-3px;}',
+        '#shortcut-i-pannel .tip {padding:15px 10px;}',
+        '#shortcut-i-pannel .tip img {width:45px; height:45px; border-radius:3px; float:left; margin-right:10px;}',
+        '#shortcut-i-pannel .tip p {color:#FFFFFF; position:relative; top:-3px; font-size:14px;}',
         '#shortcut-i-pannel .ic-add { display:inline-block; width:16px; height:20px; background-position:left -19px; position:relative; top:3px; margin-left:5px; }',
         '#shortcut-i-pannel .ic-arrow {position:absolute; width:20px; height:10px; bottom:-10px; left:83px; background-position:left -44px;}'
     ].join('');
@@ -36,7 +40,7 @@
         '<div id="shortcut-i-pannel">',
             '<div class="con">',
                 '<div class="ic-bg ic-closebtn"></div>',
-                '<div class="tips">',
+                '<div class="tip">',
                     '<img src="{%imgurl%}" />',
                     '<p>先点击<span class="ic-bg ic-add"></span><br/>再"添加到主屏幕"</p>',
                 '</div>',
@@ -47,46 +51,46 @@
 
     var appMap = {
         home: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/home.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/home.png'
         },
         todaynews: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/todaynews.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/todaynews.png'
         },
         yuetu: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/yuetu.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/yuetu.png'
         },
         nba: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/nba.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/nba.png'
         },
         auto: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/auto.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/auto.png'
         },
         iauto: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/iauto.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/iauto.png'
         },
         travel: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/travel.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/travel.png'
         },
         astro: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/astro.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/astro.png'
         },
         finance: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/finance.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/finance.png'
         },
         live: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/live.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/live.png'
         },
         movie: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/movie.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/movie.png'
         },
         video: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/video.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/video.png'
         },
         stock: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/stock.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/stock.png'
         },
         read: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/icon/read.jpg'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/read.png'
         }
     };
 
@@ -112,7 +116,7 @@
                 this._initEvent();
 
                 //记录显示日期
-                localStorage.setItem(this.dailyShowKey, this.getFormatDate(new Date()));
+                localStorage.setItem(this.dailyShowKey, +new Date());
             }
         },
 
@@ -145,7 +149,7 @@
             this.hide();
 
             //记录主动关闭日期
-            localStorage.setItem(this.forceCloseKey, this.getFormatDate(new Date()));
+            localStorage.setItem(this.forceCloseKey, +new Date());
         },
 
         _initEvent: function() {
@@ -164,15 +168,15 @@
 
             setTimeout(function() {
                 me.hide();
-            }, 6000);
+            }, 10000);
         },
 
         _isShow: function() {
             var me = this,
                 config = this.config,
-                oneDayMs = 1000 * 60 * 60 * 24,
+                oneDayMs = 1000 * 60 * 5,
                 ua = navigator.userAgent,
-                curDate = this.getFormatDate(new Date()),
+                curDate = +new Date(),
                 lastShowDate = localStorage.getItem(this.dailyShowKey),
                 forceCloseDate = localStorage.getItem(this.forceCloseKey);
 
@@ -188,14 +192,14 @@
 
             //如果已显示，且间隔时间小于一天，则不显示
             if (lastShowDate) {
-                if (+new Date(curDate) - +new Date(lastShowDate) < oneDayMs) {
+                if (curDate - lastShowDate < oneDayMs) {
                     return false;
                 }
             }
 
             //如果主动关闭过，且间隔时间少于7天，则不显示
             if (forceCloseDate) {
-                if (+new Date(curDate) - +new Date(forceCloseDate) < 7 * oneDayMs) {
+                if (curDate - forceCloseDate < 2 * oneDayMs) {
                     return false;
                 } else {
                     localStorage.removeItem(this.forceCloseKey);

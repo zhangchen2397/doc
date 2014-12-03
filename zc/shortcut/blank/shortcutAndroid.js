@@ -10,9 +10,13 @@
  *
  */
 
-(function(root, factory) {
+;(function(root, factory) {
     if (typeof define === 'function') {
         define('shortcutAndroid', [], function() {
+            return factory(root);
+        });
+    } else if (window.core && typeof core.define === 'function') {
+        core.define('shortcutAndroid', [], function() {
             return factory(root);
         });
     } else {
@@ -24,51 +28,51 @@
         '#shortcut-a-pannel {display:none; z-index:9999; position:fixed; border:1px solid solid rgba(215,215,215,0.9);; width:205px; height:100px; bottom:10px; background-color:#EBEBEB; opacity:0.9; border-radius:3px;}',
         '#shortcut-a-pannel .con { position:relative; }',
         '#shortcut-a-pannel .ic-closebtn {position:absolute; right:10px; top:8px; z-index:3; width:11px; height:11px; background:transparent url(http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/img/ic-closebtn.png) no-repeat scroll left top; -webkit-background-size: 11px auto;}',
-        '#shortcut-a-pannel p.tips {text-align:center; color:#4C4C4C; font-size:14px; padding:25px 0 10px;}',
-        '#shortcut-a-pannel p.link {text-align:center;}',
-        '#shortcut-a-pannel p.link a {display:inline-block; border-radius:3px; width:112px; height:32px; line-height:32px; color:#FFFFFF; background-color:#2B73DF; text-align:center; text-decoration:none;}',
+        '#shortcut-a-pannel p.tip {text-align:center; color:#4C4C4C; font-size:14px; padding:25px 0 10px; font-size:14px;}',
+        '#shortcut-a-pannel p.lks {text-align:center;}',
+        '#shortcut-a-pannel p.lks a {display:inline-block; border-radius:3px; width:112px; height:32px; line-height:32px; color:#FFFFFF; background-color:#2B73DF; text-align:center; text-decoration:none;}',
     ].join('');
 
     var tplStr = [
         '<div id="shortcut-a-pannel">',
             '<div class="con">',
                 '<div class="ic-closebtn"></div>',
-                '<p class="tips">{%tips%}</p>',
-                '<p class="link"><a href="{%url%}" target="_blank">好的</a></p>',
+                '<p class="tip">{%tips%}</p>',
+                '<p class="lks"><a href="{%url%}" target="_blank">好的</a></p>',
             '</div>',
         '</div>'
     ].join('');
 
     var appMap = {
         home: {
-            url: 'http://yuelinzheng.kf0309.3g.qq.com/infoapp/appcenter/?fid=1&i_f=416',
+            url: 'http://infoapp.3g.qq.com/g/s?aid=appcenter&fid=1&i_f=416',
             name: 'com.tencent.lightapp.Tencent',
-            tips: '添加快捷方式，一键访问手腾'
+            tips: '将手腾放在桌面，一键访问'
         },
         yuetu: {
-            url: 'http://yuelinzheng.kf0309.3g.qq.com/infoapp/appcenter/?fid=3&i_f=421',
+            url: 'http://infoapp.3g.qq.com/g/s?aid=appcenter&fid=3&i_f=421',
             name: 'com.tencent.lightapp.yuetu',
-            tips: '添加快捷方式，一键访问悦图'
+            tips: '将悦图放在桌面，一键访问'
         },
         nba: {
-            url: 'http://yuelinzheng.kf0309.3g.qq.com/infoapp/appcenter/?fid=2&i_f=418',
+            url: 'http://infoapp.3g.qq.com/g/s?aid=appcenter&fid=2&i_f=418',
             name: 'com.tencent.lightapp.nba',
-            tips: '添加快捷方式，一键访问NBA'
+            tips: '将NBA放在桌面，一键访问'
         },
         auto: {
-            url: 'http://yuelinzheng.kf0309.3g.qq.com/infoapp/appcenter/?fid=11&i_f=420',
+            url: 'http://infoapp.3g.qq.com/g/s?aid=appcenter&fid=11&i_f=420',
             name: 'com.tencent.lightapp.myauto',
-            tips: '添加快捷方式，一键访问车典'
+            tips: '将车典放在桌面，一键访问'
         },
         movie: {
-            url: 'http://yuelinzheng.kf0309.3g.qq.com/infoapp/appcenter/?fid=5&i_f=417',
+            url: 'http://infoapp.3g.qq.com/g/s?aid=appcenter&fid=5&i_f=417',
             name: 'com.tencent.lightapp.aidianyin',
-            tips: '添加快捷方式，一键访问爱电影'
+            tips: '将爱电影放在桌面，一键访问'
         },
         travel: {
-            url: 'http://yuelinzheng.kf0309.3g.qq.com/infoapp/appcenter/?fid=4&i_f=419',
+            url: 'http://infoapp.3g.qq.com/g/s?aid=appcenter&fid=4&i_f=419',
             name: 'com.tencent.lightapp.meiyou',
-            tips: '添加快捷方式，一键访问美游'
+            tips: '将美游放在桌面，一键访问'
         }
     };
 
@@ -93,7 +97,7 @@
                 this._initEvent();
 
                 //记录显示日期
-                localStorage.setItem(this.dailyShowKey, this.getFormatDate(new Date()));
+                localStorage.setItem(this.dailyShowKey, +new Date());
             }
         },
 
@@ -128,7 +132,7 @@
             this.hide();
 
             //记录主动关闭日期
-            localStorage.setItem(this.forceCloseKey, this.getFormatDate(new Date()));
+            localStorage.setItem(this.forceCloseKey, +new Date());
         },
 
         _initEvent: function() {
@@ -139,7 +143,7 @@
             window.addEventListener('orientationchange', this.proxy(this._setPos, this), false);
 
             this.el.querySelector('.ic-closebtn').addEventListener('click', this.proxy(this._actClose, this), false);
-            this.el.querySelector('p.link a').addEventListener('click', this.proxy(this._actClose, this), false);
+            this.el.querySelector('p.lks a').addEventListener('click', this.proxy(this._actClose, this), false);
         },
 
         _autoClose: function() {
@@ -148,14 +152,14 @@
 
             setTimeout(function() {
                 me.hide();
-            }, 6000);
+            }, 10000);
         },
 
         _isShow: function() {
             var me = this,
                 config = this.config,
-                oneDayMs = 1000 * 60 * 60 * 24,
-                curDate = this.getFormatDate(new Date()),
+                oneDayMs = 1000 * 60 * 5,
+                curDate = +new Date(),
                 lastShowDate = localStorage.getItem(this.dailyShowKey),
                 forceCloseDate = localStorage.getItem(this.forceCloseKey);
 
@@ -170,8 +174,6 @@
                     "packagename": appMap[config.key].name
                 }));
 
-                alert(rst);
-
                 if (rst == 1) {
                     return false;
                 }
@@ -179,14 +181,14 @@
 
             //如果已显示，且间隔时间小于一天，则不显示
             if (lastShowDate) {
-                if (+new Date(curDate) - +new Date(lastShowDate) < oneDayMs) {
+                if (curDate - lastShowDate < oneDayMs) {
                     return false;
                 }
             }
 
             //如果主动关闭过，且间隔时间少于7天，则不显示
             if (forceCloseDate) {
-                if (+new Date(curDate) - +new Date(forceCloseDate) < 7 * oneDayMs) {
+                if (curDate - forceCloseDate < 2 * oneDayMs) {
                     return false;
                 } else {
                     localStorage.removeItem(this.forceCloseKey);
@@ -239,10 +241,8 @@
 
             //android系统, 排除uc
             if (/android/i.test(ua)) {
-                //排除uc
-                if (!/ucbrowser/i.test(ua)) {
-                    return true;
-                }
+                //暂不排除UC
+                return true;
             }
 
             return false;
