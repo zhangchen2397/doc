@@ -6,7 +6,7 @@
 
 [shortcutAndroid](http://tc-svn.tencent.com/mqq/mqq_3gqq_rep/info_proj/trunk/commons/mt/mods/shortcutAndroid/shortcutAndroid.js)
 
-[shortcutIos](http://tc-svn.tencent.com/mqq/mqq_3gqq_rep/info_proj/trunk/commons/mt/mods/shortcutAndroid/shortcutIos.js)
+[shortcutIos](http://tc-svn.tencent.com/mqq/mqq_3gqq_rep/info_proj/trunk/commons/mt/mods/shortcutIos/shortcutIos.js)
 
 ###使用
 
@@ -46,20 +46,7 @@ new shortcutIos({
 <link rel="apple-touch-icon-precomposed" href="http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/travel_logo.png">
 ```
 
-###测试效果
-
-可通过清除浏览器缓存重复出现浮层，如能正常显示如下浮层，刚正常。
-
-ios: 
-
-![ios](https://raw.githubusercontent.com/zhangchen2397/doc/master/tc/img/ios.png "")
-
-android:
-
-![android](https://raw.githubusercontent.com/zhangchen2397/doc/master/tc/img/android.png "")
-
-
-http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/
+可通过清除浏览器缓存重复出现浮层，如在页面底部出现浮层，刚正常。
 
 ###上线需求表
 
