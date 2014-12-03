@@ -1,14 +1,14 @@
-##ios及android下添加桌面快捷方式使用说明
+#ios及android下添加桌面快捷方式使用说明
 
 由于ios及android下弹出浮层的策略不一致，且部署时有的页面只需要ios快捷方式浮层，有的页面android和ios的快捷方式浮层都需要，所以组件分为`shortcutIos`和`shortcutAndroid`，根据需要单独引入调用即可。
 
-###SVN地址
+##SVN地址
 
 [shortcutAndroid](http://tc-svn.tencent.com/mqq/mqq_3gqq_rep/info_proj/trunk/commons/mt/mods/shortcutAndroid/shortcutAndroid.js)
 
 [shortcutIos](http://tc-svn.tencent.com/mqq/mqq_3gqq_rep/info_proj/trunk/commons/mt/mods/shortcutIos/shortcutIos.js)
 
-###使用
+##使用
 
 根据需要，通过SVN externals方式将相应的组件引用到当前项目中，使用时无需考虑是否已模块化或有无依赖，如项目已模块化则按模块化的方式使用即可，如没有则按照传统的方式使用，无须对源代码做变更，使用示例如下：
 
@@ -48,11 +48,11 @@ new shortcutIos({
 
 可通过清除浏览器缓存重复出现浮层，如在页面底部出现浮层，刚正常。
 
-###上线需求表
+##上线需求表
 
 **只需部署ios浮层**
 
-key       | 业务名称                                                        | icon
+key       | 业务名称                                                        | icon地址
 ----------|-----------------------------------------------------------------|--------------------------------------------------------------------------------
 todaynews | [今日要闻](http://info.3g.qq.com/g/s?&aid=td_news_list)         | [icon](http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/todaynews.png)
 iauto     | [秀车](http://infoapp.3g.qq.com/g/s?aid=carshow#home)           | [icon](http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/iauto.png)
@@ -66,7 +66,7 @@ read      | [悦读](http://infoapp.3g.qq.com/g/s?aid=medialib)               | 
 
 **ios及android都需部署相应浮层**
 
-key       | 业务名称                                                        | icon
+key       | 业务名称                                                        | icon地址
 ----------|-----------------------------------------------------------------|--------------------------------------------------------------------------------
 yuetu     | [悦图](http://info.3g.qq.com/g/s?aid=image)                     | [icon](http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/yuetu.png)
 nba       | [掌上NBA](http://infoapp.3g.qq.com/g/s?aid=nbasearch#home)      | [icon](http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/nba.png)
