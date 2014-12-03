@@ -46,7 +46,10 @@ new shortcutIos({
 <link rel="apple-touch-icon-precomposed" href="http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/travel_logo.png">
 ```
 
-可通过清除浏览器缓存重复出现浮层，如在页面底部出现浮层，刚正常。
+测试时可通过清除浏览器缓存重复出现浮层，如在页面底部出现浮层，刚正常。
+
+**注：**如添加的业务中之前在页面顶部的轻应用的推广位，需要先去掉，具体可以和产品沟通确认。
+
 
 ##上线需求表
 
