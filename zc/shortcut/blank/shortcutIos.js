@@ -69,7 +69,7 @@
             icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/iauto.png'
         },
         travel: {
-            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/travel.png'
+            icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/img/travel.png'
         },
         astro: {
             icon: 'http://3gimg.qq.com/wap30/infoapp/touch/itravel/images/sc/astro.png'
@@ -111,6 +111,10 @@
     shortcut.prototype = {
 
         init: function() {
+            if (this.isIosSafari()) {
+                this._createMeta();
+            }
+
             if (this._isShow()) {
                 this._createDom();
                 this._initEvent();
@@ -132,6 +136,24 @@
             this.el = document.querySelector('#shortcut-i-pannel');
 
             this.show();
+        },
+
+        _createMeta: function() {
+            var me = this,
+                config = this.config,
+                headEl = document.querySelector('head');
+
+            if (!document.querySelector('meta[name=apple-mobile-web-app-capable]')) {
+                headEl.insertAdjacentHTML('beforeend', '<meta name="apple-mobile-web-app-capable" content="yes">');
+            }
+
+            if (!document.querySelector('meta[name=apple-mobile-web-app-status-bar-style]')) {
+                headEl.insertAdjacentHTML('beforeend', '<meta name="apple-mobile-web-app-status-bar-style" content="black">');
+            }
+            
+            if (!document.querySelector('link[rel=apple-touch-icon-precomposed]')) {
+                headEl.insertAdjacentHTML('beforeend', '<link rel="apple-touch-icon-precomposed" href="'+ appMap[config.key].icon +'">');
+            }
         },
 
         _setPos: function() {
