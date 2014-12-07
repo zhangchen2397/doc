@@ -97,7 +97,7 @@
                 this._initEvent();
 
                 //记录显示日期
-                localStorage.setItem(this.dailyShowKey, +new Date());
+                localStorage.setItem(this.dailyShowKey, this.getFormatDate(new Date()));
             }
         },
 
@@ -132,7 +132,7 @@
             this.hide();
 
             //记录主动关闭日期
-            localStorage.setItem(this.forceCloseKey, +new Date());
+            localStorage.setItem(this.forceCloseKey, this.getFormatDate(new Date()));
         },
 
         _initEvent: function() {
@@ -158,9 +158,10 @@
         _isShow: function() {
             var me = this,
                 config = this.config,
-                oneDayMs = 1000 * 60 * 5,
-                curDate = +new Date(),
+                oneDayMs = 1000 * 60 * 60 * 24,
+                curDate = this.getFormatDate(new Date()),
                 lastShowDate = localStorage.getItem(this.dailyShowKey),
+                ua = navigator.userAgent,
                 forceCloseDate = localStorage.getItem(this.forceCloseKey);
 
             //如不是android下，则不显示
@@ -179,16 +180,21 @@
                 }
             }
 
+            //如是已安装且是从桌面快捷方式启动，则不显示
+            if (/MQQBrowserLightApp/i.test(ua)) {
+                return false;
+            }
+
             //如果已显示，且间隔时间小于一天，则不显示
             if (lastShowDate) {
-                if (curDate - lastShowDate < oneDayMs) {
+                if (+new Date(curDate) - +new Date(lastShowDate) < oneDayMs) {
                     return false;
                 }
             }
 
             //如果主动关闭过，且间隔时间少于7天，则不显示
             if (forceCloseDate) {
-                if (curDate - forceCloseDate < 2 * oneDayMs) {
+                if (+new Date(curDate) - +new Date(forceCloseDate) < 7 * oneDayMs) {
                     return false;
                 } else {
                     localStorage.removeItem(this.forceCloseKey);
