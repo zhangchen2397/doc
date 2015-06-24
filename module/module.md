@@ -28,6 +28,6 @@ module.exports.x = x;
 module.exports.addX = addX;
 ```
 
-
+###AMD  (RequireJS)
 
 
