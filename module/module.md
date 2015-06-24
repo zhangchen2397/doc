@@ -16,7 +16,7 @@
 3. CMD (SeaJS)
 
 #### CommonJs
-`CommonJS`是服务器模块的规范，`Node.js`采用了这个规范。根据`CommonJS`规范，一个单独的文件就是一个模块，每一个模块都是一个单独的作用域，在一个文件定义的变量（还包括函数和类），都是私有的，对其他文件是不可见的。CommonJS规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。
+`CommonJS`是服务器模块的规范，`Node.js`采用了这个规范。根据`CommonJS`规范，一个单独的文件就是一个模块，每一个模块都是一个单独的作用域，在一个文件定义的变量（还包括函数和类），都是私有的，对其他文件是不可见的。`CommonJS`规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。
 
 ```javascript
 var x = 5;
@@ -28,6 +28,48 @@ module.exports.x = x;
 module.exports.addX = addX;
 ```
 
-###AMD  (RequireJS)
+####AMD  (RequireJS)
+由于`Node.js`主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，因此`CommonJS`规范比较适用。但是，如果是浏览器环境，要从服务器端加载模块，这时就必须采用非同步模式，因此浏览器端一般采用AMD规范。
 
+```javascript
+//规范
+define(id?, dependencies?, factory);
+define.amd = {};
 
+//写法1
+define(function(require, exports, module) {
+    var $ = require('jquery');
+    //code here
+});
+
+//写法2
+define(['jquery'], function($) {
+    //code here
+});
+
+//写法3
+define(['require', 'jquery'], function(require) {
+    var $ = require('jquery');
+    //code here
+});
+```
+
+####CMD (SeaJS)
+CMD规范和AMD类似，都主要运行于浏览器端，写法上看起来也很类似。主要是区别在于模块初始化时机，AMD中只要模块作为依赖时，就会加载并初始化，而CMD中，模块作为依赖且被引用时才会初始化，否则只会加载。
+
+```javascript
+define(factory);
+define.cmd = {};
+
+//写法1
+define(function(require, exports, module) {
+    var $ = require('jquery');
+    //code here
+});
+
+//写法2
+define(['jquery'], function(require) {
+    var $ = require('jquery');
+    //code here
+});
+```
