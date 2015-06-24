@@ -15,6 +15,8 @@
 2. AMD  (RequireJS)
 3. CMD (SeaJS)
 
+注：以下文中出现的AMD及CMD分别范指RequireJS、SeaJS。
+
 ####CommonJs
 `CommonJS`是服务器模块的规范，`Node.js`采用了这个规范。根据`CommonJS`规范，一个单独的文件就是一个模块，每一个模块都是一个单独的作用域，在一个文件定义的变量（还包括函数和类），都是私有的，对其他文件是不可见的。`CommonJS`规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。
 
@@ -92,4 +94,13 @@ define(['jquery'], function(require, exports, module) {
     return dialog;
 });
 ```
+
+##AMD与CMD
+这里不对AMD及CMD作详细对比，前面提到一点，最大的差异在于两者的初始化时机不一样，这种差异导致在遇到循环引用时，CMD在某些情况下是可解的，感兴趣的同学可以看下，至于执行效率上，有人专门做过测试，这里不展开说明了。
+
+对于一般使用者来说，RequireJS、SeaJS都是不错的选择，对外调用API上，CMD的API设计更简单，职能更单一，整体实现更轻量。更倾向于CommonJS的规范写法，前后端共享模块时，只需要去掉define的包装头部就行了，虽然AMD也支持CommonJS规范的写法，但不是强制的。
+
+同时对于依赖的加载顺序，AMD是不保证按照书写的顺序按序初始化模块的，而这点CMD也更接近CommonJS规范，对于使用者来说`require`就是同步的。
+
+
 
