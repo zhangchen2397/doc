@@ -9,7 +9,7 @@
 
 其中文件按需加载，依赖自动管理，使得更多精力去关注模块代码本身，开发时不需要在页面上写一大堆`script`引用，一个`require`初始化模块就搞定。不需要每增加一个文件，还要到`HTML`或者其他地方添加一个`script`标签或文件声明。
 
-###前端模块化规范标准
+##前端模块化规范标准
 
 1. CommonJs  (Node.js)
 2. AMD  (RequireJS)
@@ -29,7 +29,7 @@ module.exports.addX = addX;
 ```
 
 ####AMD  (RequireJS)
-由于`Node.js`主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，因此`CommonJS`规范比较适用。但是，如果是浏览器环境，要从服务器端加载模块，这时就必须采用非同步模式，因此浏览器端一般采用AMD规范。如下规范及一般写法：
+由于`Node.js`主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，因此`CommonJS`规范比较适用。但是，如果是浏览器环境，要从服务器端加载模块，这时就必须采用非同步模式，因此浏览器端一般采用AMD规范。如下规范定义及一般写法：
 
 ```javascript
 //规范
@@ -55,7 +55,7 @@ define(['require', 'jquery'], function(require) {
 ```
 
 ####CMD (SeaJS)
-CMD规范和AMD类似，都主要运行于浏览器端，写法上看起来也很类似。主要是区别在于模块初始化时机，AMD中只要模块作为依赖时，就会加载并初始化，而CMD中，模块作为依赖且被引用时才会初始化，否则只会加载。如下规范及一般写法：
+CMD规范和AMD类似，都主要运行于浏览器端，写法上看起来也很类似。主要是区别在于模块初始化时机，AMD中只要模块作为依赖时，就会加载并初始化，而CMD中，模块作为依赖且被引用时才会初始化，否则只会加载。如下规范定义及一般写法：
 
 ```javascript
 //规范
@@ -69,8 +69,27 @@ define(function(require, exports, module) {
 });
 
 //写法2
-define(['jquery'], function(require) {
+define(['jquery'], function(require, exports, module) {
     var $ = require('jquery');
     //code here
 });
 ```
+
+##兼容AMD、CMD及非模块化
+很多时候如果我们引用第三方组件时，并没有采用模块化开发，通常我们自己需要包装一下或通过模块加载器的`shim`插件支持模块化引用依赖。现在很多第三方库已经默认支持`AMD`规范的引用，根据以上模块定义规范，开放给第三方使用的组件能兼容不同的规范，如下示例：
+
+```javascript
+(function(root, factory) {
+    if (typeof define === "function" && (define.amd || define.cmd) {
+        define(function(require, exports, module) {
+            return factory(root);
+        });
+    } else {
+        root.dialog = factory(root);
+    }
+})(window, function(root) {
+    //code here
+    return dialog;
+});
+```
+
