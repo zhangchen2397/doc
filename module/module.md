@@ -98,7 +98,7 @@ define(['jquery'], function(require, exports, module) {
 ##AMD与CMD
 这里不对AMD及CMD作详细对比，前面提到一点，最大的差异在于两者的初始化时机不一样，这种差异导致在遇到循环引用时，CMD在某些情况下是可解的，感兴趣的同学可以看下，至于执行效率上，有人专门做过测试，这里不展开说明了。
 
-对于一般使用者来说，RequireJS、SeaJS都是不错的选择，对外调用API上，CMD的API设计更简单，职能更单一，整体实现更轻量也更倾向于CommonJS的规范写法，前后端共享模块时，只需要去掉define的包装头部就行了，虽然AMD也支持CommonJS规范的写法，但不是强制的。
+对于一般使用者来说，RequireJS、SeaJS都是不错的选择，对外调用API上，CMD的API设计更简单，职能更单一，整体实现更轻量也更倾向于CommonJS的规范写法，提倡依赖就近声明。前后端共享模块时，只需要去掉define的包装头部就行了，虽然AMD也支持CommonJS规范的写法，但不是强制的。
 
 同时对于依赖的加载顺序，AMD是不保证按照书写的顺序按序初始化模块的，而这点CMD也更接近CommonJS规范，对于使用者来说`require`就是同步的。
 
@@ -115,6 +115,10 @@ define(['jquery'], function(require, exports, module) {
 所以采用模块化开发上线部署时，压缩前通常通过工具先提取依赖，这样`require`就可以当做普通变量直接压缩了，同时也不再需要加载器分析提取依赖，对于提升性能也是蛮有好处的。合并前同样也需要借助工具先提取各个模块的ID，然后才能按照合并配置进行合并。整个过程如下：
 
 ![build flow](http://3gimg.qq.com/wap30/infoapp/temp/build_flow.png)
+
+`SeaJS`和`RequireJS`官方都提供了构建工具，如`SeaJS`的**spm**，`RequireJS`的**r.js**，当然也很多`grunt`和`glup`插件可使用，区别于普通压缩合并就是要有提取依赖及模块ID的能力。
+
+对比构建工具使用感受，`spm`的整个上手并不是那么顺畅，配置太复杂。`r.js`使用相对简单，只需要配置好合并规范的配置文件即可，其它grunt或glup提供的插件相对灵活，可根据自身业务灵活配置。
 
 
 
