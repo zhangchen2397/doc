@@ -132,5 +132,3 @@ define(['jquery'], function(require, exports, module) {
 5. 编译后自动修改版本号 (包括图片的引用)
 6. 线上本地调试功能
 ……
-
-以上纯属个人体会，如有不对，多谢指正！

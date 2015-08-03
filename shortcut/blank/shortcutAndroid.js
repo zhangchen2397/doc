@@ -277,7 +277,7 @@
             return function() {
                 if (args) return fn.apply(thisObj, args);
                 return fn.apply(thisObj, arguments);
-            }
+            };
         },
 
         //获取隐藏元素的长宽值
