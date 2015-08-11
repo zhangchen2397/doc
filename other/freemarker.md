@@ -1,4 +1,4 @@
-```freemarker
+```java
 <#macro formatTime time>
     <#assign oneHourScds = 60 * 60 * 60>
     <#if (time <= 60)>
