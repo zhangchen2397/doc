@@ -8,8 +8,10 @@ import login from '@tencent/login-mt';
 var a = 
 {
 "dependencies": {
-  "@tencent/tpl-mt": "^1.0.0",
   "@tencent/zepto-mt": "^1.0.1"
+  "@tencent/cookie-mt": "^1.0.0",
+  "@tencent/tips-mt": "^1.0.0",
+  "@tencent/login-mt": "^1.0.0",
 }
 
 ```
