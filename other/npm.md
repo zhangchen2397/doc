@@ -1,14 +1,15 @@
 ```javascript
-define('m_share', [
-  'm_zepto', 'm_cookie', 'm_tips', 'm_login'
-], function ($, cookie, tips, login) {
-  function share(config) {
-    this.config = $.extend({}, defaultConfig, config || {});
-    this.init.call(this);
-  }
+import $ from 'm_zepto';
+import cookie from 'm_cookie';
+import tips from 'm_tips';
+import login from 'm_login';
 
-  //other code from here
+function share(config) {
+  this.config = $.extend({}, defaultConfig, config || {});
+  this.init.call(this);
+}
 
-  return share;
-});
+//other code from here
+
+export default share
 ```
