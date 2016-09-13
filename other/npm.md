@@ -1,9 +1,9 @@
 ```javascript
 define('m_share', [
-  'm_zepto', 'm_cookie', 'm_tips', 'm_login', 'm_base64'
-], function ($, cookie, tips, login, base64) {
+  'm_zepto', 'm_cookie', 'm_tips', 'm_login'
+], function ($, cookie, tips, login) {
   function share(config) {
-    this.config = $.extend({}, this.defaultConfig, config || {});
+    this.config = $.extend({}, defaultConfig, config || {});
     this.init.call(this);
   }
 
