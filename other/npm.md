@@ -1,15 +1,15 @@
 ```javascript
-import $ from 'm_zepto';
-import cookie from 'm_cookie';
-import tips from 'm_tips';
-import login from 'm_login';
+import $ from '@tencent/zepto-mt';
+import cookie from '@tencent/cookie-mt';
+import tips from '@tencent/tips-mt';
+import login from '@tencent/login-mt';
 
-function share(config) {
-  this.config = $.extend({}, defaultConfig, config || {});
-  this.init.call(this);
+  
+var a = 
+{
+"dependencies": {
+  "@tencent/tpl-mt": "^1.0.0",
+  "@tencent/zepto-mt": "^1.0.1"
 }
 
-//other code from here
-
-export default share
 ```
