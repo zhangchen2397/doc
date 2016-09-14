@@ -1,16 +1,49 @@
 ```javascript
+portal
+  ├── src .................. 前后端es6源文件目录
+  |    ├── common .......... 前后端共享公共目录
+  |    |     ├── ejs
+  |    |     └── tpl
+  |    ├── mock ............ mock数据及接口目录
+  |    |     ├── channel.js
+  |    |     └── home.js
+  |    ├── server ........... 后端server目录
+  |    |     ├── conf
+  |    |     ├── dao
+  |    |     ├── lib
+  |    |     ├── routers
+  |    |     ├── app.js
+  |    |     └── run.js
+  |    └── static ............ 前端静态资源目录
+  |          └── app.js
+  ├── view ................... node接入层对应模板目录
+  |    ├── common ............ 后端公共模板
+  |    |     ├── rem.ejs
+  |    |     └── footer.ejs
+  |    └── page .............. 后端页面模板
+  |          ├── index.ejs
+  |          └── list.ejs
+  ├── .babelrc
+  ├── .eslintrc
+  ├── .gitignore
+  ├── package.json
+  ├── README.md
+  └── webpack.config.js
+
 "scripts": {
-  "clean": "rimraf lib dist umd",
   "lint": "eslint src",
-  "build:cjs": "cross-env BABEL_ENV=cjs babel src --out-dir lib",
-  "build:umd": "cross-env BABEL_ENV=umd babel src --out-dir umd",
-  "build:dist": "cross-env NODE_ENV=development webpack",
-  "build:dist:min": "cross-env NODE_ENV=production webpack",
-  "build": "npm run build:cjs && npm run build:umd",
-  "dev": "cross-env BABEL_ENV=cjs babel src --out-dir lib --watch",
-  "prepublish": "npm run clean && npm run build"
+  "clean-server": "rimraf server mock common",
+  "clean-static": "rimraf static",
+  "clean": "npm run clean-server && npm run clean-static",
+  "build-server": "cross-env BABEL_ENV=cjs babel src --out-dir ./",
+  "start-server": "npm run build-server && nodemon server/run.js",
+  "watch-server": "cross-env BABEL_ENV=cjs babel src --out-dir ./ --watch",
+  "build-static": "cross-env NODE_ENV=production webpack",
+  "watch-static": "cross-env NODE_ENV=development webpack --watch"
 }
 ```
+
+
 
 
 
