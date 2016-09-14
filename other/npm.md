@@ -17,12 +17,8 @@ portal
   |    └── static ............ 前端静态资源目录
   |          └── app.js
   ├── view ................... node接入层对应模板目录
-  |    ├── common ............ 后端公共模板
-  |    |     ├── rem.ejs
-  |    |     └── footer.ejs
-  |    └── page .............. 后端页面模板
-  |          ├── index.ejs
-  |          └── list.ejs
+  |    ├── common
+  |    └── page
   ├── .babelrc
   ├── .eslintrc
   ├── .gitignore
