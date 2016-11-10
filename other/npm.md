@@ -1,17 +1,19 @@
 ```html
-<!-- javascript -->
-<script>
-  var userName = "<%= userName %>";
-</script>
+<!-- 源模板 -->
+<div><%= title =></div>
 
-<!-- html -->
-<img src="./error.png" onerror="alert('xss')" />
-<iframe src="./error.html" onerror="alert('xss')"></iframe>
-
-<!-- css -->
-<h1 style ="background-image: url(javascript:alert('xss'))"></h1>
-<style>
-  h1 { height: expression(alert('xss')); }
-</style>
+<!-- 可构造以下攻击手段 -->
+<div><script>alert('xss');</script></div>
+<div><img src="./error.png" onerror="alert('xss')" /></div>
+<div><iframe src="./error.html" onerror="alert('xss')"></iframe></div>
 ```
 
+```javascript
+const htmlEncode = str => {
+  return str.replace(/>/g, '&gt;')
+    .replace(/</g,'&lt;')
+    .replace(/ /g,'&nbsp;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+```
