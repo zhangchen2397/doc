@@ -1,20 +1,14 @@
 ```javascript
 <!-- 源模板 -->
-<script>
-  var userName = "<%= userName %>";
-</script>
+<h1 style ="background-image: url(<%= bgUrl %>)"></h1>
+<style>
+  h1 { background-image: : url(<%= bgUrl %>); }
+</style>
+
 
 <!-- 可构造以下攻击手段 -->
-var userName = "";alert('xss');//";
-```
-
-```javascript
-const javascriptEncode = str => {
-  return .replace(/"/g, '\"')
-    .replace(/'/g, "\'")
-    .replace(/\//g, '\/')
-    .replace(/\//g, '\/')
-    .replace(/>/g, '\>')
-    .replace(/</g, '\<');
-}
+<h1 style ="background-image: url(javascript:alert('xss'))"></h1>
+<style>
+  h1 { height: expression(alert('xss')); }
+</style>
 ```
