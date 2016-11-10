@@ -10,8 +10,7 @@ var userName = "";alert('xss');//";
 
 ```javascript
 const javascriptEncode = str => {
-  return str.replace(/>/g, '&gt;')
-    .replace(/"/g, '\"')
+  return .replace(/"/g, '\"')
     .replace(/'/g, "\'")
     .replace(/\//g, '\/')
     .replace(/\//g, '\/')
