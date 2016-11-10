@@ -1,8 +1,14 @@
-```
-  iPhone5    320px = 750 rpx    即: 2.34rpx = 1px
-  iPhone6    375px = 750 rpx    即: 2rpx    = 1px
-  iPhone6P   414px = 750 rpx    即: 1.81rpx = 1px
+```html
+<script>
+  var userName = "<%= userName %>";
+</script>
 
+<img src="./error.png" onerror="alert('xss')" />
+<iframe src="./error.html" onerror="alert('xss')"></iframe>
+
+<h1 style ="background-image: url(javascript:alert('xss'))"></h1>
+<style>
+  h1 { height: expression(alert('xss')); }
+</style>
 ```
 
-dddd
