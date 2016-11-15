@@ -1,16 +1,21 @@
 ```html
-<!-- javascript -->
-<script>var userName = <%= userName %>;</script>
+<!-- 原始html -->
+<div><%= title %></div>
+<img src="error.png" onerror="<%= url %>" />
 
-<!-- html -->
+<!-- 可构造以下xss -->
+<div><script>alert("xss");</script></div>
 <img src="error.png" onerror="alert('xss')" />
-<iframe src="error.html" onerror="alert('xss')"></iframe>
 
-<!-- css -->
-<a style ="background-image: url(javascript:alert('XSS'))"></a>
-<style> h1 { background-image: expression(alert('xss')); } </style>
+<!-- 应对非完整版 -->
+const htmlEncode = str => {
+  return str.replace(/>/g,'&gt;')
+    .replace(/</g,'&lt;')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+};
 ```
-
 
 
 ```
