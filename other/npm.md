@@ -12,10 +12,8 @@
 //简单应对
 const htmlEncode = str => {
   return str.replace(/>/g,'&gt;')
-    .replace(/</g,'&lt;')
-    .replace(/&/g, '&amp;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;');
+    .replace(/</g,'&lt;').replace(/&/g, '&amp;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 };
 ```
 
