@@ -6,8 +6,10 @@
 <!-- 可构造以下xss -->
 <div><script>alert("xss");</script></div>
 <img src="error.png" onerror="alert('xss')" />
+```
 
-<!-- 应对非完整版 -->
+```javascript
+//简单应对
 const htmlEncode = str => {
   return str.replace(/>/g,'&gt;')
     .replace(/</g,'&lt;')
