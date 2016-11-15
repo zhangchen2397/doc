@@ -1,19 +1,21 @@
 ```html
 <!-- 原始html -->
-<div><%= title %></div>
-<img src="error.png" onerror="<%= url %>" />
+<script>
+  var userName = "<%= userName %>";
+</script>
 
 <!-- 可构造以下xss -->
-<div><script>alert("xss");</script></div>
-<img src="error.png" onerror="alert('xss')" />
+<script>
+  var userName = "";alert('xss');//"
+</script>
 ```
 
 ```javascript
 //简单应对
-const htmlEncode = str => {
-  return str.replace(/>/g,'&gt;')
-    .replace(/</g,'&lt;').replace(/&/g, '&amp;')
-    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const javascriptEncode = str => {
+  return str.replace(/\//g, "\/")
+    .replace(/"/g, '\"').replace(/'/g, "\'")
+    .replace(/>/g, '\\x3E').replace(/</g, '\\x3C');
 };
 ```
 
