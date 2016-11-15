@@ -1,22 +1,10 @@
 ```html
 <!-- 原始html -->
-<script>
-  var userName = "<%= userName %>";
-</script>
+<a style ="background-image: url(javascript:alert('XSS'))"></a>
+<style> h1 { background-image: expression(alert('xss')); } </style>
 
-<!-- 可构造以下xss -->
-<script>
-  var userName = "";alert('xss');//"
-</script>
-```
-
-```javascript
-//简单应对
-const javascriptEncode = str => {
-  return str.replace(/\//g, "\/")
-    .replace(/"/g, '\"').replace(/'/g, "\'")
-    .replace(/>/g, '\\x3E').replace(/</g, '\\x3C');
-};
+<a style ="background-image: url(javascr\\\ipt:alert('XSS'))"></a>
+<style> h1 { background-image: ex pression(alert('xss')); } </style>
 ```
 
 
